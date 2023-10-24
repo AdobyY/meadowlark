@@ -24,6 +24,10 @@ app.use(handlers.notFound)
 // User page 500
 app.use(handlers.serverError)
 
-app.listen(PORT, () => {
-    console.log(`Running Express on PORT:${PORT}`)
-})
+if(require.main === module){
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}...`)
+    })
+}else(
+    module.exports = app
+)
