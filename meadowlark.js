@@ -3,12 +3,22 @@ const expressHandlebars = require('express-handlebars')
 const handlers = require('./lib/handlers')
 const bodyParser = require('body-parser')
 const multiparty = require('multiparty')
+const cookieParser = require('cookie-parser')
+const { credentials } = require('./config')
+const expressSession = require('express-session')
+const flashMiddleware = require('./lib/middleware/flash')
+
 
 const app = express()
 
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
-
+app.use(cookieParser(credentials.cookieSecret))
+app.use(expressSession({
+    resave: false,
+    saveUninitialized: false,
+    secret: credentials.cookieSecret
+}))
 
 // Settings for the Handlebars representation engine
 app.engine('handlebars', expressHandlebars.engine({
