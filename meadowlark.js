@@ -31,7 +31,10 @@ app.engine('handlebars', expressHandlebars.engine({
         }
     }
 }))
+
 app.set('view engine', 'handlebars')
+//app.set('env', 'production')
+
 
 const PORT = process.env.PORT || 3000
 
@@ -71,7 +74,8 @@ app.use(handlers.serverError)
 
 if(require.main === module){
     app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}...`)
+        console.log(`Express running on mode ${app.get('env')} `+
+        `in http://localhost:${PORT}`)
     })
 }else(
     module.exports = app
